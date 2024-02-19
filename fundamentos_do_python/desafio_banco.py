@@ -43,7 +43,7 @@ while True:
 
         elif saque > 0:
             saldo -= saque
-            extrato += f"Saque: R${saldo: .2f}\n"
+            extrato += f"Saque: R${saque: .2f}\n"
             saque_atual += 1
             print("Saque efetuado com sucesso!")
         
