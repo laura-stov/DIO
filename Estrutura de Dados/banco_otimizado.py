@@ -2,7 +2,7 @@ LIMITE = 500
 LIMITE_SAQUES = 3
 
 #por chave apenas (nome = "bla")
-def saque(valor, saldo, extrato, numero_saques):
+def saque(*, valor, saldo, extrato, numero_saques):
 
     if valor > saldo:
         print("A operação falhou! Você não tem saldo suficiente.")
@@ -25,7 +25,7 @@ def saque(valor, saldo, extrato, numero_saques):
     return saldo, extrato, numero_saques
 
 #por posição apenas
-def deposito(valor, saldo, extrato):
+def deposito(valor, saldo, extrato, /):
     if valor > 0:
         saldo += valor
         extrato += f"Depósito: R$ {valor:.2f}\n"
@@ -36,7 +36,7 @@ def deposito(valor, saldo, extrato):
     
     return saldo, extrato
 
-def extrato_final(extrato, saldo):
+def extrato_final(saldo, /, *,extrato):
     print("\n================ EXTRATO ================")
     print("Não foram realizadas movimentações.\n" if not extrato else extrato)
     print(f"Saldo: R$ {saldo:.2f}")
@@ -91,7 +91,7 @@ menu2 = """
 => """
 
 def main():
-    saldo = 200
+    saldo = 0
     extrato = ""
     numero_saques = 0
     usuario = []
@@ -139,7 +139,7 @@ def main():
                         if opcao == 1:
                             valor = float(input("Digite o valor a ser sacado: "))
                             print()
-                            saldo, extrato, numero_saques = saque(valor, saldo, extrato, numero_saques)
+                            saldo, extrato, numero_saques = saque(valor = valor, saldo = saldo, extrato = extrato, numero_saques = numero_saques)
 
                         elif opcao == 2:
                             valor = float(input("Digite o valor a ser depositado: "))
@@ -147,7 +147,7 @@ def main():
                             saldo, extrato = deposito(valor, saldo, extrato)
 
                         elif opcao == 3:
-                            extrato_final(extrato, saldo)
+                            extrato_final(saldo, extrato = extrato)
                             print()
 
                         elif opcao == 0:
@@ -163,7 +163,7 @@ def main():
 
         elif opcao == 3:
             conta_total, num_conta = criar_conta(usuario, num_conta, conta_total)
-            dados_total = capital(num_conta, 0, "", 200, dados_total)
+            dados_total = capital(num_conta, 0, "", 0, dados_total)
 
             print("Conta criada com sucesso!")
 
